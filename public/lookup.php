@@ -15,13 +15,13 @@ if (isset($_POST['submit'])) {
   try  {
     $connection = new PDO($dsn, $username, $password, $options);
 
-    $sql = "SELECT * 
-            FROM megatable
-            WHERE winPoints = :winPoints";
+    $sql = "select champs.name as name, sum(stats.win) / count(*) as rate
+           from (champs inner join participants on champs.id = participants.championid)inner join stats on participants.id = stats.id
+           where champs.name = :name";
 
-    $winPoints = $_POST['winPoints'];
+    $name = $_POST['name'];
     $statement = $connection->prepare($sql);
-    $statement->bindParam(':winPoints', $winPoints, PDO::PARAM_STR);
+    $statement->bindParam(':name', $name, PDO::PARAM_STR);
     $statement->execute();
 
     $result = $statement->fetchAll();
@@ -31,8 +31,9 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <?php require "templates/header.php"; ?>
-        
-<?php  
+
+
+<?php
 if (isset($_POST['submit'])) {
   if ($result && $statement->rowCount() > 0) { ?>
     <h2>Results</h2>
@@ -40,43 +41,37 @@ if (isset($_POST['submit'])) {
     <table>
       <thead>
         <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Email Address</th>
-          <th>Age</th>
-          <th>Location</th>
-          <th>Date</th>
+          <th>Champion Name</th>
+          <th>Win Rate</th>
         </tr>
       </thead>
       <tbody>
       <?php foreach ($result as $row) : ?>
         <tr>
-          <td><?php echo escape($row["id"]); ?></td>
-          <td><?php echo escape($row["firstname"]); ?></td>
-          <td><?php echo escape($row["lastname"]); ?></td>
-          <td><?php echo escape($row["email"]); ?></td>
-          <td><?php echo escape($row["age"]); ?></td>
-          <td><?php echo escape($row["location"]); ?></td>
-          <td><?php echo escape($row["date"]); ?> </td>
+          <td><?php echo escape($row["name"]); ?></td>
+           <td><?php echo escape($row["rate"]); ?></td>
         </tr>
       <?php endforeach; ?>
       </tbody>
     </table>
     <?php } else { ?>
-      <blockquote>No results found for <?php echo escape($_POST['location']); ?>.</blockquote>
+      <blockquote>Sorry we can not find anything<?php echo escape($_POST['location']); ?>.</blockquote>
     <?php } 
 } ?> 
 
-<h2>Apply restrictions</h2>
+<h2>
+    input game end time and find the champion with highest win rate
+</h2>
 
 <form method="post">
-  <input name="csrf" type="hidden" value="<?php echo escape($_SESSION['csrf']); ?>">
-  <label for="location">Win Points</label>
-  <input type="text" id="winPoints" name="winPoints">
-  <input type="submit" name="submit" value="View Results">
-</form>
 
-<a href="index.php">Back to home</a>
+  <input name="csrf" type="hidden" value="<?php echo escape($_SESSION['csrf']); ?>">
+  <label for="location">Champion Name</label>
+  <input type="text" id="id" name="name">
+  <input type="submit" name="submit" value="search">
+</form>
+    <p style="text-align: center"><a href="index.php">
+    Back to home
+</a></p>
 
 <?php require "templates/footer.php"; ?>

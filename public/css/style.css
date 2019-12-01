@@ -1,5 +1,32 @@
+body
+{
+
+	background: url("../images/680381.png") no-repeat;
+
+	height:100%;
+
+	width:100%;
+
+	overflow: hidden;
+
+	background-size:110%;
+
+
+
+
+	color: white;
+	font-family: 'Arvo',serif;
+
+
+}
+t10{
+
+	color: black;
+}
+
 label {
 	display: block;
+	color: palegoldenrod;
 	margin: 5px 0;
 }
 
@@ -13,3 +40,13 @@ th {
 	padding: 5px;
 	border-bottom: 1px solid #aaa;
 }
+
+h2{
+	text-align: center;
+}
+form{
+	text-align: center;
+}
+
+
+

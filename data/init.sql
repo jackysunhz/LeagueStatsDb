@@ -2,17 +2,17 @@
 drop database if exists lol;
 create database lol;
 use lol;
-drop database if exists Champs;
+drop table if exists Champs;
 create table Champs(
-id int,
 name varchar(30),
+id int,
 PRIMARY KEY (id)
 
 );
 
 
 
-drop database if exists Matches;
+drop table if exists Matches;
 create table Matches(
 id int,
 gameid varchar(255),
@@ -27,7 +27,7 @@ PRIMARY KEY (id)
 
 
 
-drop database if exists Participants;
+drop table if exists Participants;
 create table Participants(
 id int, -- player id
 matchid int, 
@@ -45,7 +45,7 @@ FOREIGN KEY (matchid) REFERENCES Matches(id)
 
 
 
-drop database if exists stats;
+drop table if exists stats;
 create table stats(
 id int, 
 win int,
@@ -110,13 +110,13 @@ FOREIGN KEY (id) REFERENCES Participants(id)
 
 
 
-drop database if exists teamMatch;
+drop table if exists teamMatch;
 create table teamMatch(
 matchid int, 
 teamid int, -- red team or blue team
 championid int,
 banturn int,
-PRIMARY KEY (matchid),
+-- PRIMARY KEY (matchid),
 FOREIGN KEY (matchid) REFERENCES Matches(id),
 FOREIGN KEY (championid) REFERENCES Champs(id)
 );
@@ -125,7 +125,7 @@ FOREIGN KEY (championid) REFERENCES Champs(id)
 
 
 
-drop database if exists teamStats;
+drop table if exists teamStats;
 create table teamStats(
 matchid int, 
 teamid int, 
@@ -140,47 +140,48 @@ inhibkills int,
 baronkills int, 
 dragonkills int, 
 harrykills int,
-PRIMARY KEY (matchid),
+-- PRIMARY KEY (matchid),
 FOREIGN KEY (matchid) REFERENCES Matches(id)
 );
 
 
 
-LOAD DATA INFILE ''
+LOAD DATA INFILE 'C:/Users/jacky/OneDrive/Desktop/league-of-legends-ranked-matches/champs.csv'
 INTO TABLE Champs
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n';
 
-LOAD DATA INFILE ''
+LOAD DATA INFILE 'C:/Users/jacky/OneDrive/Desktop/league-of-legends-ranked-matches/matches.csv'
 INTO TABLE Matches
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n';
 
-LOAD DATA INFILE ''
+LOAD DATA INFILE 'C:/Users/jacky/OneDrive/Desktop/league-of-legends-ranked-matches/participants.csv'
 INTO TABLE Participants
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n';
 
-LOAD DATA INFILE ''
+LOAD DATA INFILE 'C:/Users/jacky/OneDrive/Desktop/league-of-legends-ranked-matches/stats1.csv'
 INTO TABLE stats
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n';
 
 
-LOAD DATA INFILE ''
+LOAD DATA INFILE 'C:/Users/jacky/OneDrive/Desktop/league-of-legends-ranked-matches/stats2.csv'
 INTO TABLE stats
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n';
 
-LOAD DATA INFILE ''
+LOAD DATA INFILE 'C:/Users/jacky/OneDrive/Desktop/league-of-legends-ranked-matches/teambans.csv'
 INTO TABLE teamMatch
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n';
 
-LOAD DATA INFILE ''
+LOAD DATA INFILE 'C:/Users/jacky/OneDrive/Desktop/league-of-legends-ranked-matches/teamstats.csv'
 INTO TABLE teamStats
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n';
+
 
 
 
