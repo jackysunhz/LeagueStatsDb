@@ -1,7 +1,7 @@
 
 drop database if exists lol;
 create database lol;
-
+use lol;
 drop database if exists Champs;
 create table Champs(
 id int,
