@@ -2,7 +2,7 @@
 
 /**
  * Configuration for database connection
- *
+ * Need to change according to local user
  */
 
 $host       = "localhost";

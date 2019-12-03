@@ -1,3 +1,5 @@
 </body>
-<t10>design by JackySun Sijian Chen </t10>
+<div id = "watermark">
+© 2019 Jacky Sun and Sijian Chen
+</div>
 </html>

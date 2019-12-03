@@ -1,4 +1,3 @@
-
 drop database if exists lol;
 create database lol;
 use lol;
@@ -7,10 +6,7 @@ create table Champs(
 name varchar(30),
 id int,
 PRIMARY KEY (id)
-
 );
-
-
 
 drop table if exists Matches;
 create table Matches(
@@ -22,10 +18,9 @@ seasonid int,
 duration int,
 creation varchar(255),
 version varchar(255),
-PRIMARY KEY (id)
+PRIMARY KEY (id),
+INDEX(gameid)
 );
-
-
 
 drop table if exists Participants;
 create table Participants(
@@ -39,10 +34,9 @@ role varchar(255),
 position varchar(255),
 PRIMARY KEY (id),
 FOREIGN KEY (championid) REFERENCES Champs(id),
-FOREIGN KEY (matchid) REFERENCES Matches(id)
+FOREIGN KEY (matchid) REFERENCES Matches(id),
+INDEX(championid,matchid)
 );
-
-
 
 
 drop table if exists stats;
@@ -104,11 +98,9 @@ wardsplaced int,
 wardskilled int, 
 firstblood int,
 PRIMARY KEY (id),
-FOREIGN KEY (id) REFERENCES Participants(id)
+FOREIGN KEY (id) REFERENCES Participants(id),
+INDEX(kills,assists,deaths)
 );
-
-
-
 
 drop table if exists teamMatch;
 create table teamMatch(
@@ -120,10 +112,6 @@ banturn int,
 FOREIGN KEY (matchid) REFERENCES Matches(id),
 FOREIGN KEY (championid) REFERENCES Champs(id)
 );
-
-
-
-
 
 drop table if exists teamStats;
 create table teamStats(
@@ -144,8 +132,6 @@ harrykills int,
 FOREIGN KEY (matchid) REFERENCES Matches(id)
 );
 
-
-
 LOAD DATA INFILE 'C:/Users/jacky/OneDrive/Desktop/league-of-legends-ranked-matches/champs.csv'
 INTO TABLE Champs
 FIELDS TERMINATED BY ','
@@ -165,7 +151,6 @@ LOAD DATA INFILE 'C:/Users/jacky/OneDrive/Desktop/league-of-legends-ranked-match
 INTO TABLE stats
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n';
-
 
 LOAD DATA INFILE 'C:/Users/jacky/OneDrive/Desktop/league-of-legends-ranked-matches/stats2.csv'
 INTO TABLE stats
